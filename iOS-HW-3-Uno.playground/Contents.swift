@@ -95,6 +95,7 @@ struct Card{
     
     func imageName() -> String {
         return "\(color)_\(number).png"
+        
     }
 }
 
