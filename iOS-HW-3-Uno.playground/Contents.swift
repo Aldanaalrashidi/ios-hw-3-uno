@@ -90,18 +90,18 @@ var wild_Draw = UIImage(named: "Wild_Draw.png")
 // struct ...
 
 struct Card{
-    var color: String
+    var color: String?
     var action: String?
     var number: Int?
     
     
     func imageName() -> String {
-        if (action != nil){
-            return "\(color)_\(action ?? "Draw").png"
-        }
-        else{
-            return "\(color)_\(number ?? 0).png"
-            
+        if number != nil {
+            return ("\(color!)_\(number!)")
+        } else if action! == "Wild" || action! == "Wild_Draw" {
+            return ("\(action!)")
+        } else{
+            return ("\(color!)_\(action!)")
         }
     }
 }
@@ -112,23 +112,26 @@ struct Card{
 
 var cards: [Card] = []
 let colors = ["Blue", "Green", "Red","Yellow"]
-let actions = ["Draw", "Reverse", "Skip"]
+let actions = ["Draw", "Reverse", "Skip", "Wild", "Wild_Draw"]
 
 
 for color in colors{
-    cards.append(Card(color: "\(color)", number: 0))
-    for _ in 1...2{
+    cards.append(Card(color: color, number: 0))
+    
+    for turn in 1...2{
+        
+        for action in actions{
+            if turn == 1 && action != "Wild_Draw" {
+                cards.append(Card(color: color, action: action))
+            } else if turn == 2 && action != "Wild" {
+                cards.append(Card(color: color, action: action))
+            }
+        }
+        
         for i in 1...9{
-            cards.append(Card(color: "\(color)", number: i ))
+            cards.append(Card(color: "\(color)", number: i))
         }
     }
-    for action in actions {
-        for _ in 1...2{
-            for _ in 1...1{
-            cards.append(Card(color: "\(color)", action: "\(action)" ))
-        }
-    }
-}
 }
 cards
 
