@@ -91,18 +91,30 @@ var wild_Draw = UIImage(named: "Wild_Draw.png")
 
 struct Card{
     var color: String
-    var number: Int
+    var action: String?
+    var number: Int?
+    
     
     func imageName() -> String {
-        return "\(color)_\(number).png"
-        
+        if (action != nil){
+            return "\(color)_\(action ?? "Draw").png"
+        }
+        else{
+            return "\(color)_\(number ?? 0).png"
+            
+        }
     }
 }
 
 
-var cards: [Card] = []
+       
+       
 
+var cards: [Card] = []
 let colors = ["Blue", "Green", "Red","Yellow"]
+let actions = ["Draw", "Reverse", "Skip"]
+
+
 for color in colors{
     cards.append(Card(color: "\(color)", number: 0))
     for _ in 1...2{
@@ -110,8 +122,18 @@ for color in colors{
             cards.append(Card(color: "\(color)", number: i ))
         }
     }
+    for action in actions {
+        for _ in 1...2{
+            for _ in 1...1{
+            cards.append(Card(color: "\(color)", action: "\(action)" ))
+        }
+    }
+}
 }
 cards
+
+
+
 
 
 
